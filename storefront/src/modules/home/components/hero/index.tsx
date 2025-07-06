@@ -3,30 +3,36 @@ import { Button, Heading } from "@medusajs/ui"
 
 const Hero = () => {
   return (
-    <div className="h-[75vh] w-full border-b border-ui-border-base relative bg-ui-bg-subtle">
+    <div 
+      className="h-[75vh] w-full border-b border-ui-border-base relative bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: "url('/Homepage-bg-mountain.png')",
+      }}
+    >
+      {/* Dark overlay for better text readability */}
+      <div className="absolute inset-0 bg-black bg-opacity-40 z-5"></div>
+      
       <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center small:p-32 gap-6">
         <span>
           <Heading
             level="h1"
-            className="text-3xl leading-10 text-ui-fg-base font-normal"
+            className="text-4xl leading-tight text-white font-bold drop-shadow-lg"
           >
-            Well done! You have successfully deployed your Medusa 2.0 store on Railway!
+            Welcome to Our Store
           </Heading>
           <Heading
             level="h2"
-            className="text-3xl leading-10 text-ui-fg-subtle font-normal"
+            className="text-xl leading-relaxed text-white font-normal drop-shadow-md"
           >
-            Need help customizing your store?
+            Discover amazing products at great prices
           </Heading>
         </span>
-        <a
-          href="https://funkyton.com/medusajs-2-0-is-finally-here/"
-          target="_blank"
+        <Button 
+          variant="secondary"
+          className="bg-white text-black hover:bg-gray-100 font-medium px-8 py-3"
         >
-          <h1 style={{ textDecoration: "underline" }}>
-            Visit the tutorial
-          </h1>
-        </a>
+          Shop Now
+        </Button>
       </div>
     </div>
   )
