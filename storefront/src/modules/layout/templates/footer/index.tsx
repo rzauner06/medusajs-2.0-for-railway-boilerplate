@@ -112,7 +112,6 @@ export default async function Footer() {
           <Text className="txt-compact-small">
             © {new Date().getFullYear()} Recova Store. All rights reserved.
           </Text>
-          <MedusaCTA />
         </div>
       </div>
     </footer>
