@@ -10,19 +10,19 @@ export const paymentInfoMap: Record<
   string,
   { title: string; icon: React.JSX.Element }
 > = {
-  pp_stripe_stripe: {
+  card: {
     title: "Credit card",
     icon: <CreditCard />,
   },
-  "pp_stripe-ideal_stripe": {
+  ideal: {
     title: "iDeal",
     icon: <Ideal />,
   },
-  "pp_stripe-bancontact_stripe": {
+  bancontact: {
     title: "Bancontact",
     icon: <Bancontact />,
   },
-  pp_paypal_paypal: {
+  paypal: {
     title: "PayPal",
     icon: <PayPal />,
   },
