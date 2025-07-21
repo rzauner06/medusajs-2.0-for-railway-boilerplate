@@ -1,3 +1,5 @@
+//medusa config
+
 import { loadEnv, Modules, defineConfig } from '@medusajs/utils';
 import {
   ADMIN_CORS,
@@ -133,12 +135,12 @@ const medusaConfig = {
           },
         ],
       },
-    }] : [])
-  ],
-  plugins: [
-  ...(MEILISEARCH_HOST && MEILISEARCH_ADMIN_KEY ? [{
-      resolve: '@rokmohar/medusa-plugin-meilisearch',
+    }] : []),
+    ...(MEILISEARCH_HOST && MEILISEARCH_ADMIN_KEY ? [{
+      key: Modules.SEARCH,
+      resolve: '@medusajs/search',
       options: {
+        provider: 'meilisearch',
         config: {
           host: MEILISEARCH_HOST,
           apiKey: MEILISEARCH_ADMIN_KEY
@@ -160,6 +162,32 @@ const medusaConfig = {
     }] : [])
   ]
 };
+
+// Commented out plugins section for future reference:
+// plugins: [
+//   ...(MEILISEARCH_HOST && MEILISEARCH_ADMIN_KEY ? [{
+//       resolve: '@rokmohar/medusa-plugin-meilisearch',
+//       options: {
+//         config: {
+//           host: MEILISEARCH_HOST,
+//           apiKey: MEILISEARCH_ADMIN_KEY
+//         },
+//         settings: {
+//           products: {
+//             type: 'products',
+//             enabled: true,
+//             fields: ['id', 'title', 'description', 'handle', 'variant_sku', 'thumbnail'],
+//             indexSettings: {
+//               searchableAttributes: ['title', 'description', 'variant_sku'],
+//               displayedAttributes: ['id', 'handle', 'title', 'description', 'variant_sku', 'thumbnail'],
+//               filterableAttributes: ['id', 'handle'],
+//             },
+//             primaryKey: 'id',
+//           }
+//         }
+//       }
+//     }] : [])
+// ]
 
 console.log(JSON.stringify(medusaConfig, null, 2));
 export default defineConfig(medusaConfig);
