@@ -136,30 +136,30 @@ const medusaConfig = {
         ],
       },
     }] : []),
-    ...(MEILISEARCH_HOST && MEILISEARCH_ADMIN_KEY ? [{
-      key: Modules.SEARCH,
-      resolve: '@medusajs/search',
-      options: {
-        provider: 'meilisearch',
-        config: {
-          host: MEILISEARCH_HOST,
-          apiKey: MEILISEARCH_ADMIN_KEY
-        },
-        settings: {
-          products: {
-            type: 'products',
-            enabled: true,
-            fields: ['id', 'title', 'description', 'handle', 'variant_sku', 'thumbnail'],
-            indexSettings: {
-              searchableAttributes: ['title', 'description', 'variant_sku'],
-              displayedAttributes: ['id', 'handle', 'title', 'description', 'variant_sku', 'thumbnail'],
-              filterableAttributes: ['id', 'handle'],
-            },
-            primaryKey: 'id',
-          }
-        }
-      }
-    }] : [])
+    // ...(MEILISEARCH_HOST && MEILISEARCH_ADMIN_KEY ? [{
+    //   key: Modules.SEARCH,
+    //   resolve: '@medusajs/search',
+    //   options: {
+    //     provider: 'meilisearch',
+    //     config: {
+    //       host: MEILISEARCH_HOST,
+    //       apiKey: MEILISEARCH_ADMIN_KEY
+    //     },
+    //     settings: {
+    //       products: {
+    //         type: 'products',
+    //         enabled: true,
+    //         fields: ['id', 'title', 'description', 'handle', 'variant_sku', 'thumbnail'],
+    //         indexSettings: {
+    //           searchableAttributes: ['title', 'description', 'variant_sku'],
+    //           displayedAttributes: ['id', 'handle', 'title', 'description', 'variant_sku', 'thumbnail'],
+    //           filterableAttributes: ['id', 'handle'],
+    //         },
+    //         primaryKey: 'id',
+    //       }
+    //     }
+    //   }
+    // }] : [])
   ]
 };
 
