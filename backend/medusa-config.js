@@ -1,6 +1,7 @@
 //medusa config
 
 import { loadEnv, Modules, defineConfig } from '@medusajs/utils';
+import { MeilisearchPluginOptions } from '@rokmohar/medusa-plugin-meilisearch';
 import {
   ADMIN_CORS,
   AUTH_CORS,
@@ -22,8 +23,8 @@ import {
   MINIO_ACCESS_KEY,
   MINIO_SECRET_KEY,
   MINIO_BUCKET,
-  //MEILISEARCH_HOST,
-  //MEILISEARCH_ADMIN_KEY
+  MEILISEARCH_HOST,
+  MEILISEARCH_ADMIN_KEY
 } from 'lib/constants';
 
 loadEnv(process.env.NODE_ENV, process.cwd());
@@ -136,58 +137,58 @@ const medusaConfig = {
         ],
       },
     }] : []),
-    // ...(MEILISEARCH_HOST && MEILISEARCH_ADMIN_KEY ? [{
-    //   key: Modules.SEARCH,
-    //   resolve: '@medusajs/search',
-    //   options: {
-    //     provider: 'meilisearch',
-    //     config: {
-    //       host: MEILISEARCH_HOST,
-    //       apiKey: MEILISEARCH_ADMIN_KEY
-    //     },
-    //     settings: {
-    //       products: {
-    //         type: 'products',
-    //         enabled: true,
-    //         fields: ['id', 'title', 'description', 'handle', 'variant_sku', 'thumbnail'],
-    //         indexSettings: {
-    //           searchableAttributes: ['title', 'description', 'variant_sku'],
-    //           displayedAttributes: ['id', 'handle', 'title', 'description', 'variant_sku', 'thumbnail'],
-    //           filterableAttributes: ['id', 'handle'],
-    //         },
-    //         primaryKey: 'id',
-    //       }
-    //     }
-    //   }
-    // }] : [])
+    {
+      resolve: '@rokmohar/medusa-plugin-meilisearch',
+      options: {
+        config: {
+          host: process.env.MEILISEARCH_HOST ?? '',
+          apiKey: process.env.MEILISEARCH_API_KEY ?? '',
+        },
+        settings: {
+          // The key is used as the index name in Meilisearch
+          products: {
+            // Required: Index type
+            type: 'products',
+            // Optional: Whether the index is enabled. When disabled:
+            // - Index won't be created or updated
+            // - Documents won't be added or removed
+            // - Index won't be included in searches
+            // - All operations will be silently skipped
+            enabled: true,
+            // Optional: Specify which fields to include in the index
+            // If not specified, all fields will be included
+            fields: ['id', 'title', 'description', 'handle', 'variant_sku', 'thumbnail'],
+            indexSettings: {
+              searchableAttributes: ['title', 'description', 'variant_sku'],
+              displayedAttributes: ['id', 'handle', 'title', 'description', 'variant_sku', 'thumbnail'],
+              filterableAttributes: ['id', 'handle'],
+            },
+            primaryKey: 'id',
+            // Create your own transformer
+            /*transformer: (product) => ({
+              id: product.id,
+              // other attributes...
+            }),*/
+          },
+        },
+        i18n: {
+          // Choose one of the following strategies:
+
+          // 1. Separate index per language
+          // strategy: 'separate-index',
+          // languages: ['en', 'fr', 'de'],
+          // defaultLanguage: 'en',
+
+          // 2. Language-specific fields with suffix
+          strategy: 'field-suffix',
+          languages: ['en', 'fr', 'de'],
+          defaultLanguage: 'en',
+          translatableFields: ['title', 'description'],
+        },
+      },
+    }
   ]
 };
-
-// Commented out plugins section for future reference:
-// plugins: [
-//   ...(MEILISEARCH_HOST && MEILISEARCH_ADMIN_KEY ? [{
-//       resolve: '@rokmohar/medusa-plugin-meilisearch',
-//       options: {
-//         config: {
-//           host: MEILISEARCH_HOST,
-//           apiKey: MEILISEARCH_ADMIN_KEY
-//         },
-//         settings: {
-//           products: {
-//             type: 'products',
-//             enabled: true,
-//             fields: ['id', 'title', 'description', 'handle', 'variant_sku', 'thumbnail'],
-//             indexSettings: {
-//               searchableAttributes: ['title', 'description', 'variant_sku'],
-//               displayedAttributes: ['id', 'handle', 'title', 'description', 'variant_sku', 'thumbnail'],
-//               filterableAttributes: ['id', 'handle'],
-//             },
-//             primaryKey: 'id',
-//           }
-//         }
-//       }
-//     }] : [])
-// ]
 
 console.log(JSON.stringify(medusaConfig, null, 2));
 export default defineConfig(medusaConfig);
